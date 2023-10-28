@@ -35,6 +35,8 @@ export async function createThread({ text, author, communityId, path }: Props) {
 
 export async function fetchThreads(pageNumber = 1, pageSize = 10) {
 	try {
+		connectToDB();
+
 		const skipAmount = (pageNumber - 1) * pageSize;
 
 		const threads = await Thread.find({ parentId: { $in: [undefined, null] } })
@@ -70,6 +72,8 @@ export async function fetchThreads(pageNumber = 1, pageSize = 10) {
 
 export async function fetchThreadById(id: string) {
 	try {
+		connectToDB();
+
 		const thread = await Thread.findById(id)
 			.populate({
 				path: "author",
@@ -104,5 +108,29 @@ export async function fetchThreadById(id: string) {
 		return thread;
 	} catch (error: any) {
 		throw new Error(`Failed to fetch thread ${error.message}`);
+	}
+}
+
+export async function addCommentToThread(threadId: string, commentText: string, userId: string, path: string) {
+	try {
+		connectToDB();
+
+		const originalThread = await Thread.findById(threadId);
+
+		if(!originalThread) throw new Error("Parent thread not found");
+
+		const commentThread = await Thread.create({
+			parent: threadId,
+			author: userId,
+			text: commentText,
+		});
+
+		originalThread.children.push(commentThread._id);
+		await originalThread.save();
+
+		revalidatePath(path);
+
+	} catch (error: any) {
+		throw new Error(`Failed to add to thread ${error.message}`);
 	}
 }
