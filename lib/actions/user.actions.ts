@@ -13,7 +13,7 @@ export async function updateUser(
 	path: string
 ): Promise<void> {
 	try {
-		await connectToDB();
+		connectToDB();
 
 		await User.findOneAndUpdate(
 			{ id: userId },
@@ -37,7 +37,7 @@ export async function updateUser(
 
 export async function fetchUser(userId: string) {
 	try {
-		await connectToDB();
+		connectToDB();
 
 		return await User.findOne({id: userId})
 		// .populate({
