@@ -22,7 +22,7 @@ export async function createThread({ text, author, communityId, path }: Props) {
 			community: null,
 		});
 
-		//update use model
+		//update user model
 		await User.findByIdAndUpdate(author, {
 			$push: { threads: createdThread._id },
 		});
@@ -39,7 +39,7 @@ export async function fetchThreads(pageNumber = 1, pageSize = 10) {
 
 		const skipAmount = (pageNumber - 1) * pageSize;
 
-		const threads = await Thread.find({ parentId: { $in: [undefined, null] } })
+		const threads = await Thread.find({ parentId: { $in: [null, undefined] } })
 			.sort({
 				createdAt: "desc",
 			})
@@ -59,11 +59,11 @@ export async function fetchThreads(pageNumber = 1, pageSize = 10) {
 			});
 
 		const totalPostCount = await Thread.countDocuments({
-			parentId: { $in: [undefined, null] },
+			parentId: { $in: [null, undefined] },
 		});
 
 		const isNext = totalPostCount > skipAmount + threads.length;
-
+		console.log(threads);
 		return { threads, isNext };
 	} catch (error: any) {
 		throw new Error(`Failed to fetch threads ${error.message}`);
@@ -120,7 +120,7 @@ export async function addCommentToThread(threadId: string, commentText: string, 
 		if(!originalThread) throw new Error("Parent thread not found");
 
 		const commentThread = await Thread.create({
-			parent: threadId,
+			parentId: threadId,
 			author: userId,
 			text: commentText,
 		});

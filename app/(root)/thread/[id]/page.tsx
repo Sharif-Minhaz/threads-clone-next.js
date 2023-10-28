@@ -32,10 +32,27 @@ export default async function Page({ params }: { params: { id: string } }) {
 			<div className="mt-7">
 				<Comment
 					threadId={thread.id}
-					currentUserImg={user.imageUrl}
+					currentUserImg={userInfo.image}
 					currentUserId={userInfo._id?.toString()}
 				/>
 			</div>
-		</section>
+
+			<div className="mt-7">
+				{thread.children.map((comment: any) => (
+					<ThreadCard
+						key={comment.id}
+						id={comment.id}
+						currentUserId={comment?.id || ""}
+						parentId={comment.parentId}
+						content={comment.text}
+						author={comment.author}
+						community={comment.community}
+						createdAt={comment.createdAt}
+						comments={comment.children}
+						isComment
+					/>
+				))}
+			</div>
+		</section> 
 	);
 }

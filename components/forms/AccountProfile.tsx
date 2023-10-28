@@ -115,14 +115,15 @@ export default function AccountProfile({ user, btnTitle }: Props) {
 						<FormItem className="flex items-center gap-4">
 							<FormLabel className="account-form_image-label">
 								{field.value ? (
-									<Image
-										src={field.value}
-										priority
-										alt="profile photo"
-										width={96}
-										height={96}
-										className="rounded-full object-contain"
-									/>
+									<div className="w-24 h-24">
+										<Image
+											src={field.value}
+											priority
+											alt="profile photo"
+											fill
+											className="rounded-full object-cover"
+										/>
+									</div>
 								) : (
 									<Image
 										src="/assets/profile.svg"
