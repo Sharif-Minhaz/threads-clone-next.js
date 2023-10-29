@@ -2,9 +2,6 @@
 // Copy the middleware code as it is from the above resource
 
 import { authMiddleware } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs";
-
-console.log(currentUser);
 
 export default authMiddleware({
 	// An array of public routes that don't require authentication.

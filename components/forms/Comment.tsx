@@ -3,13 +3,8 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname } from "next/navigation";
@@ -34,12 +29,7 @@ export default function Comment({ threadId, currentUserImg, currentUserId }: Pro
 	});
 
 	const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
-		await addCommentToThread(
-            threadId,
-            values.thread,
-            currentUserId,
-            pathname,
-		);
+		await addCommentToThread(threadId, values.thread, currentUserId, pathname);
 
 		form.reset();
 	};
@@ -52,15 +42,20 @@ export default function Comment({ threadId, currentUserImg, currentUserId }: Pro
 					name="thread"
 					render={({ field }) => (
 						<FormItem className="flex gap-3 items-center w-full">
-                            <Image
-                                src={currentUserImg}
-                                alt="Profile image"
-                                width={48}
-                                height={48}
-                                className="object-cover rounded-full"
-                            />
+							<Image
+								src={currentUserImg}
+								alt="Profile image"
+								width={48}
+								height={48}
+								className="object-cover rounded-full"
+							/>
 							<FormControl className="border-none bg-transparent">
-								<Input {...field} type="text" placeholder="comment" className="no-focus outline-none text-light-2" />
+								<Input
+									{...field}
+									type="text"
+									placeholder="comment"
+									className="no-focus outline-none text-light-2"
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>

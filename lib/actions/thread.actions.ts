@@ -63,7 +63,7 @@ export async function fetchThreads(pageNumber = 1, pageSize = 10) {
 		});
 
 		const isNext = totalPostCount > skipAmount + threads.length;
-		console.log(threads);
+		
 		return { threads, isNext };
 	} catch (error: any) {
 		throw new Error(`Failed to fetch threads ${error.message}`);

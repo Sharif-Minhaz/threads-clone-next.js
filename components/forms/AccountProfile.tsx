@@ -115,7 +115,7 @@ export default function AccountProfile({ user, btnTitle }: Props) {
 						<FormItem className="flex items-center gap-4">
 							<FormLabel className="account-form_image-label">
 								{field.value ? (
-									<div className="w-24 h-24">
+									<div className="w-24 h-24 relative">
 										<Image
 											src={field.value}
 											priority
