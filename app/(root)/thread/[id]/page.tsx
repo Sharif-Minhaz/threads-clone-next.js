@@ -3,18 +3,18 @@ import Comment from "@/components/forms/Comment";
 import { fetchThreadById } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation"
+import { redirect } from "next/navigation";
 
 export default async function Page({ params }: { params: { id: string } }) {
-    if(!params.id) return null;
+	if (!params.id) return null;
 
-    const user = await currentUser();
-    if(!user) return null;
+	const user = await currentUser();
+	if (!user) return null;
 
-    const userInfo = await fetchUser(user?.id || "");
-    if(!userInfo?.onboarded) redirect("/onboarding");
+	const userInfo = await fetchUser(user?.id || "");
+	if (!userInfo?.onboarded) redirect("/onboarding");
 
-    const thread = await fetchThreadById(params.id);
+	const thread = await fetchThreadById(params.id);
 
 	return (
 		<section className="relative">
@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 				parentId={thread.parentId}
 				content={thread.text}
 				author={thread.author}
-				community={thread.community}
+				// community={thread.community}
 				createdAt={thread.createdAt}
 				comments={thread.children}
 			/>
@@ -46,13 +46,13 @@ export default async function Page({ params }: { params: { id: string } }) {
 						parentId={comment.parentId}
 						content={comment.text}
 						author={comment.author}
-						community={comment.community}
+						// community={comment.community}
 						createdAt={comment.createdAt}
 						comments={comment.children}
 						isComment
 					/>
 				))}
 			</div>
-		</section> 
+		</section>
 	);
 }
