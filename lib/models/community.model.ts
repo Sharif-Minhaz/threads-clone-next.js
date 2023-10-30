@@ -25,6 +25,12 @@ const communitySchema = new Schema({
 		type: Boolean,
 		default: false,
 	},
+	threads: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "Thread",
+		},
+	],
 	members: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 

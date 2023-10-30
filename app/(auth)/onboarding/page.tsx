@@ -10,10 +10,10 @@ export default async function page() {
 	const userData = {
 		id: user?.id,
 		objectId: userInfo?._id,
-		username: userInfo?.username || user?.username,
-		name: userInfo?.name || user?.firstName || "",
-		bio: userInfo?.bio || "",
-		image: userInfo?.image || user?.imageUrl,
+		username: userInfo ? userInfo?.username : user?.username,
+		name: userInfo ? userInfo?.name : user?.firstName || "",
+		bio: userInfo ? userInfo?.bio : "",
+		image: userInfo ? userInfo?.image : user?.imageUrl,
 	};
 
 	return (

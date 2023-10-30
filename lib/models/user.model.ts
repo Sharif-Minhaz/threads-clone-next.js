@@ -21,7 +21,7 @@ const userSchema = new Schema({
 		default: false,
 	},
 	threads: [{ type: Schema.Types.ObjectId, ref: "Thread" }],
-	community: [{ type: Schema.Types.ObjectId, ref: "Community" }],
+	communities: [{ type: Schema.Types.ObjectId, ref: "Community" }],
 });
 
 const User = models.User || model("User", userSchema);
