@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 				parentId={thread.parentId}
 				content={thread.text}
 				author={thread.author}
-				// community={thread.community}
+				community={thread.community}
 				createdAt={thread.createdAt}
 				comments={thread.children}
 			/>
@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 						parentId={comment.parentId}
 						content={comment.text}
 						author={comment.author}
-						// community={comment.community}
+						community={comment.community}
 						createdAt={comment.createdAt}
 						comments={comment.children}
 						isComment
