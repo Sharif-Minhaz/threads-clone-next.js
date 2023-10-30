@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 
-// import { fetchCommunityPosts } from "@/lib/actions/community.actions";
-// import { fetchUserPosts } from "@/lib/actions/user.actions";
+import { fetchCommunityPosts } from "@/lib/actions/community.actions";
 
 import ThreadCard from "../cards/ThreadCard";
 import { fetchUserPosts } from "@/lib/actions/user.actions";
@@ -19,11 +18,11 @@ interface Result {
 			image: string;
 			id: string;
 		};
-		// community: {
-		// 	id: string;
-		// 	name: string;
-		// 	image: string;
-		// } | null;
+		community: {
+			id: string;
+			name: string;
+			image: string;
+		} | null;
 		createdAt: string;
 		children: {
 			author: {
@@ -42,7 +41,11 @@ interface Props {
 async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
 	let result: Result;
 
-	result = await fetchUserPosts(accountId);
+	if (accountType === "Community") {
+		result = await fetchCommunityPosts(accountId);
+	} else {
+		result = await fetchUserPosts(accountId);
+	}
 
 	if (!result) {
 		redirect("/");
@@ -66,11 +69,11 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
 									id: thread.author.id,
 							  }
 					}
-					// community={
-					// 	accountType === "Community"
-					// 		? { name: result.name, id: result.id, image: result.image }
-					// 		: thread.community
-					// }
+					community={
+						accountType === "Community"
+							? { name: result.name, id: result.id, image: result.image }
+							: thread.community
+					}
 					createdAt={thread.createdAt}
 					comments={thread.children}
 				/>
